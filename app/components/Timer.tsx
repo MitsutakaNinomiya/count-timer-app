@@ -14,8 +14,8 @@ export default function Timer() {
 
   const playSound = () => {
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-    const oscillator = audioContext.createOscillator()
-    const gainNode = audioContext.createGain()
+    const oscillator = audioContext.createOscillator()      
+    const gainNode = audioContext.createGain()        
   
 
     oscillator.connect(gainNode)
@@ -57,16 +57,35 @@ export default function Timer() {
   }
 
   return (
-    <div>
-      {seconds === 0 ? (
-        <p>終了！</p>
-      ) : (
-        <p>{formatTime(seconds)}</p>
-      )}
-      <button onClick={handleStartPause}>
-        {isRunning ? 'Pause' : 'Start'}
-      </button>
-      <button onClick={handleReset}>Reset</button>
+    <div className="flex flex-col items-center justify-center space-y-8 bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md">
+      {/* タイマー表示 */}
+      <div className="text-center">
+        {seconds === 0 ? (
+          <p className="text-4xl md:text-5xl font-bold text-red-500 animate-pulse">
+            終了！
+          </p>
+        ) : (
+          <p className="text-6xl md:text-7xl font-bold text-gray-800 font-mono tracking-wider">
+            {formatTime(seconds)}
+          </p>
+        )}
+      </div>
+
+      {/* ボタン群 */}
+      <div className="flex flex-col sm:flex-row gap-4 w-full">
+        <button
+          onClick={handleStartPause}
+          className="flex-1 px-8 py-4 text-lg font-semibold text-white bg-indigo-600 rounded-lg shadow-lg hover:bg-indigo-700 active:scale-95 transition-all duration-150 cursor-pointer transform hover:scale-105"
+        >
+          {isRunning ? 'Pause' : 'Start'}
+        </button>
+        <button
+          onClick={handleReset}
+          className="flex-1 px-8 py-4 text-lg font-semibold text-gray-700 bg-gray-200 rounded-lg shadow-lg hover:bg-gray-300 active:scale-95 transition-all duration-150 cursor-pointer transform hover:scale-105"
+        >
+          Reset
+        </button>
+      </div>
     </div>
   )
 }
